@@ -12,7 +12,19 @@ if [[ "$os" == "d" ]];then
     sudo apt update
     sudo apt upgrade
     sudo apt install zsh -y
-    sudo apt install -y tmux fontconfig wget unzip
+    sudo apt install -y tmux fontconfig wget unzip curl
+
+    echo "Installing latest Go..."
+    GO_VERSION=$(curl -s "https://go.dev/VERSION?m=text" | head -n 1 | tr -d '\r')
+    wget -qO /tmp/go.tar.gz "https://go.dev/dl/${GO_VERSION}.linux-amd64.tar.gz"
+    sudo rm -rf /usr/local/go
+    sudo tar -C /usr/local -xzf /tmp/go.tar.gz
+    sudo ln -sf /usr/local/go/bin/go /usr/local/bin/go
+    sudo ln -sf /usr/local/go/bin/gofmt /usr/local/bin/gofmt
+    rm -f /tmp/go.tar.gz
+
+    curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+    sudo apt install -y nodejs
     sudo bash ./docker_debian.sh
     wget -O vscode.deb 'https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64'
     sudo apt install ./vscode.deb
@@ -23,7 +35,7 @@ elif [[ "$os" == "a" ]];then
     echo "Starting installation..."
 
     sudo pacman -Syu --noconfirm
-    sudo pacman -S --needed --noconfirm base-devel git zsh tmux ruby ghostty fontconfig wget unzip
+    sudo pacman -S --needed --noconfirm base-devel git zsh tmux ruby ghostty fontconfig wget unzip nodejs-lts-krypton npm go
 
     echo "Installing Docker Desktop from AUR..."
     git clone https://aur.archlinux.org/docker-desktop.git
