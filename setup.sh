@@ -129,4 +129,25 @@ if [[ "$lazysql" == "y" ]]; then
     fi
 fi
 
+echo "Do you want to install btop (System Monitor)? (y/n)"
+read btop_install
+if [[ "$btop_install" == "y" ]]; then
+    if [[ "$os" == "d" ]]; then
+        sudo apt install -y btop
+    elif [[ "$os" == "a" ]]; then
+        sudo pacman -S --noconfirm btop
+    fi
+fi
+
+echo "Do you want to install k9s (Kubernetes TUI)? (y/n)"
+read k9s_install
+if [[ "$k9s_install" == "y" ]]; then
+    if [[ "$os" == "d" ]]; then
+        go install github.com/derailed/k9s@latest
+        sudo install ~/go/bin/k9s /usr/local/bin/
+    elif [[ "$os" == "a" ]]; then
+        sudo pacman -S --noconfirm k9s
+    fi
+fi
+
 echo "Installation complete! Please restart your terminal to apply changes."
