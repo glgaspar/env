@@ -82,3 +82,25 @@ sudo gem install colorls
 git clone https://github.com/ThePrimeagen/tmux-sessionizer.git
 mv -f tmux-sessionizer ~/tmux-sessionizer
 mv -f .zshrc ~/.zshrc
+
+echo "Are you using Grub? (y/n)"
+read grub
+if [[ "$grub" == "y" ]]; then
+    git clone https://github.com/vinceliuice/grub2-themes.git
+    cd grub2-themes
+    sudo ./install.sh -b -t tela vimix
+    cd ..
+    rm -rf grub2-themes
+fi
+
+echo "Do you want to install the latest version of Neovim? (y/n)"
+read nvim
+if [[ "$nvim" == "y" ]]; then
+    if [[ "$os" == "d" ]]; then
+        sudo apt install -y neovim
+    elif [[ "$os" == "a" ]]; then
+        sudo pacman -S --needed --noconfirm neovim
+    fi
+fi
+
+echo "Installation complete! Please restart your terminal to apply changes."
