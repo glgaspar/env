@@ -103,4 +103,19 @@ if [[ "$nvim" == "y" ]]; then
     fi
 fi
 
+echo "Do you want to install the latest version of Lazygit? (y/n)"
+read lazygit
+if [[ "$lazygit" == "y" ]]; then
+    if [[ "$os" == "d" ]]; then
+        LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
+        curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+        tar xf lazygit.tar.gz lazygit
+        sudo install lazygit /usr/local/bin/
+        rm lazygit.tar.gz
+
+    elif [[ "$os" == "a" ]]; then
+        sudo pacman -S lazygit
+    fi
+fi
+
 echo "Installation complete! Please restart your terminal to apply changes."
