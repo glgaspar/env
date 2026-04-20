@@ -118,4 +118,15 @@ if [[ "$lazygit" == "y" ]]; then
     fi
 fi
 
+echo "Do you want to install the latest version of Lazysql? (y/n)"
+read lazysql
+if [[ "$lazysql" == "y" ]]; then
+    if [[ "$os" == "d" ]]; then
+        go install github.com/jorgerojas26/lazysql@latest
+        sudo install ~/go/bin/lazysql /usr/local/bin/
+    elif [[ "$os" == "a" ]]; then
+        sudo pacman -S lazysql
+    fi
+fi
+
 echo "Installation complete! Please restart your terminal to apply changes."
