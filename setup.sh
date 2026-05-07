@@ -83,6 +83,12 @@ git clone https://github.com/ThePrimeagen/tmux-sessionizer.git
 mv -f tmux-sessionizer ~/tmux-sessionizer
 mv -f .zshrc ~/.zshrc
 
+echo "Oh My Tmux? (y/n)"
+read oh_my_tmux
+if [[ "$oh_my_tmux" == "y" ]]; then
+    curl -fsSL "https://github.com/gpakosz/.tmux/raw/refs/heads/master/install.sh#$(date +%s)" | bash       
+fi
+
 echo "Are you using Grub? (y/n)"
 read grub
 if [[ "$grub" == "y" ]]; then
@@ -101,6 +107,13 @@ if [[ "$nvim" == "y" ]]; then
     elif [[ "$os" == "a" ]]; then
         sudo pacman -S --needed --noconfirm neovim
     fi
+fi
+
+echo "Do you want to install the latest version of JUI? (y/n)"
+read jui
+if [[ "$jui" == "y" ]]; then
+    go install github.com/glgaspar/jui@latest                                                                                                                                                                 15:14:05
+    sudo install ~/go/bin/jui /usr/local/bin/
 fi
 
 echo "Do you want to install the latest version of Lazygit? (y/n)"
